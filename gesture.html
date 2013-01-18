@@ -18,7 +18,7 @@
         <script src="http://code.jquery.com/jquery-latest.js">
                 
         </script>
-        <script src="js/bootstrap.min.js">
+        <script src="http://twitter.github.com/bootstrap/assets/js/bootstrap.min.js">
                 
         </script>
         <div id="rotation" class="demo" name="cur">
@@ -63,20 +63,26 @@
                     ev.originEvent.preventDefault();
                     ev.originEvent.stopPropagation();
                 });
-                var initial = 0;
+                var initialx = 0;
+                var initialy = 0;
                 touch.on('#drag .target', 'drag', {
                     interval: 10
                 }, function(ev) {
-                    var d = initial + ev.distanceX;
-
+                    var d = initialx + ev.distanceX;
+                    var h = initialy + ev.distanceY;
                     if (ev.fingerStatus === 'end') {
-                        initial += ev.distanceX;
+                        initialx += ev.distanceX;
+                        initialy += ev.distanceY;
                     }
 
                     var max = this.parentNode.offsetWidth - this.offsetWidth;
+                    var maxh = this.parentNode.offsetHeight - this.offsetHeight;
                     d = d < 0 ? 0 : d;
                     d = d > max ? max : d;
+                    h= h< 0 ? 0 : h;
+                    h= h> max ? max : h;
                     this.style.marginLeft = d + 'px';
+                    this.style.marginTop = h + 'px';
 
                     
                 });
