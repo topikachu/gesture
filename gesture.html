@@ -6,7 +6,8 @@
             Bootstrap 101 Template
         </title>
         <!-- Bootstrap -->
-        <link href="http://twitter.github.com/bootstrap/assets/css/bootstrap.css" rel="stylesheet" media="screen">
+        <link href="http://twitter.github.com/bootstrap/assets/css/bootstrap.css"
+        rel="stylesheet" media="screen">
         <link href="http://code.baidu.com/demo.css" rel="stylesheet" media="screen">
     </head>
     
@@ -15,38 +16,71 @@
             Hello, world!
         </h1>
         <script src="http://code.jquery.com/jquery-latest.js">
+                
         </script>
         <script src="js/bootstrap.min.js">
+                
         </script>
         <div id="rotation" class="demo" name="cur">
             <div class="target" style="-webkit-transform: rotate(32deg);">
             </div>
         </div>
+
+        <div id="drag" class="demo" name="cur">
+            <div class="target" style="-webkit-transform: rotate(32deg);">
+            </div>
+        </div>
         <script type="text/javascript" src="http://code.baidu.com/touch-min-0.2.1.js">
+                
         </script>
         <script>
-            //rotation
-    (function() {
-        console.log("run")
-        var angle = 30;
-        touch.on('#rotation .target', 'touchstart', function(ev) {
-            ev.startRotate();
-            ev.originEvent.preventDefault();
-            ev.originEvent.stopPropagation();
-        });
-        touch.on('#rotation .target', 'rotate', {
-            interval: 10
-        }, function(ev) {
-            var totalAngle = angle + ev.rotation;
-            if (ev.fingerStatus === 'end') {
-                angle = angle + ev.rotation;
-            }
+                    //rotation
+             (function() {
+                var angle = 30;
+                touch.on('#rotation .target', 'touchstart', function(ev) {
+                    ev.startRotate();
+                    ev.originEvent.preventDefault();
+                    ev.originEvent.stopPropagation();
+                });
+                touch.on('#rotation .target', 'rotate', {
+                    interval: 10
+                }, function(ev) {
+                    var totalAngle = angle + ev.rotation;
+                    if (ev.fingerStatus === 'end') {
+                        angle = angle + ev.rotation;
+                    }
 
-            this.style.webkitTransform = 'rotate(' + (totalAngle) + 'deg)';
+                    this.style.webkitTransform = 'rotate(' + (totalAngle) + 'deg)';
 
 
-        });
-    })();
+                });
+            })();
+
+
+            //drag
+             (function() {
+                touch.on('#drag .target', 'touchstart', function(ev) {
+                    ev.originEvent.preventDefault();
+                    ev.originEvent.stopPropagation();
+                });
+                var initial = 0;
+                touch.on('#drag .target', 'drag', {
+                    interval: 10
+                }, function(ev) {
+                    var d = initial + ev.distanceX;
+
+                    if (ev.fingerStatus === 'end') {
+                        initial += ev.distanceX;
+                    }
+
+                    var max = this.parentNode.offsetWidth - this.offsetWidth;
+                    d = d < 0 ? 0 : d;
+                    d = d > max ? max : d;
+                    this.style.marginLeft = d + 'px';
+
+                    
+                });
+            })();
         </script>
     </body>
 
