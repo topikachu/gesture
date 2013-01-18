@@ -17,105 +17,105 @@
             Hello, world!
         </h1>
         <script src="http://code.jquery.com/jquery-latest.js">
-                                
+                                        
         </script>
         <script src="http://twitter.github.com/bootstrap/assets/js/bootstrap.min.js">
-                                
+                                        
         </script>
         <script type="text/javascript" src="http://code.baidu.com/touch-min-0.2.1.js">
-                                
+                                        
         </script>
         <script type="text/javascript" src="http://jsdraw2dx.jsfiction.com/jsDraw2DX_Uncompressed.js">
-                                
+                                        
         </script>
         <div id="rotation" class="demo" name="cur">
             <div class="target" style="-webkit-transform: rotate(32deg);">
             </div>
         </div>
         <div id="drag" class="demo" name="cur">
-            <div id="graphics" style="overflow:hidden;position:relative;width:600px;height:300px;">
+            <div id="graphics">
             </div>
-            <div class="target" style="-webkit-transform: rotate(32deg);">
+            <div class="target" style="-webkit-transform: rotate(0deg);">
             </div>
         </div>
         <script>
-                                    //rotation
-                             (function() {
-                                var angle = 30;
-                                touch.on('#rotation .target', 'touchstart', function(ev) {
-                                    ev.startRotate();
-                                    ev.originEvent.preventDefault();
-                                    ev.originEvent.stopPropagation();
-                                });
-                                touch.on('#rotation .target', 'rotate', {
-                                    interval: 10
-                                }, function(ev) {
-                                    var totalAngle = angle + ev.rotation;
-                                    if (ev.fingerStatus === 'end') {
-                                        angle = angle + ev.rotation;
-                                    }
+                                            //rotation
+                                     (function() {
+                                        var angle = 30;
+                                        touch.on('#rotation .target', 'touchstart', function(ev) {
+                                            ev.startRotate();
+                                            ev.originEvent.preventDefault();
+                                            ev.originEvent.stopPropagation();
+                                        });
+                                        touch.on('#rotation .target', 'rotate', {
+                                            interval: 10
+                                        }, function(ev) {
+                                            var totalAngle = angle + ev.rotation;
+                                            if (ev.fingerStatus === 'end') {
+                                                angle = angle + ev.rotation;
+                                            }
 
-                                    this.style.webkitTransform = 'rotate(' + (totalAngle) + 'deg)';
-
-
-                                });
-                            })();
+                                            this.style.webkitTransform = 'rotate(' + (totalAngle) + 'deg)';
 
 
-                            //drag
-                             (function() {
-                                touch.on('#drag .target', 'touchstart', function(ev) {
-                                    ev.originEvent.preventDefault();
-                                    ev.originEvent.stopPropagation();
-                                });
-                                var initialx = 0;
-                                var initialy = 0;
-                                touch.on('#drag .target', 'drag', {
-                                    interval: 10
-                                }, function(ev) {
-                                    var d = initialx + ev.distanceX;
-                                    var h = initialy + ev.distanceY;
-                                    if (ev.fingerStatus === 'end') {
-                                        initialx += ev.distanceX;
-                                        initialy += ev.distanceY;
-                                    }
+                                        });
+                                    })();
 
-                                    var max = this.parentNode.offsetWidth - this.offsetWidth;
-                                    var maxh = this.parentNode.offsetHeight - this.offsetHeight;
-                                    d = d < 0 ? 0 : d;
-                                    d = d > max ? max : d;
-                                    h = h < 0 ? 0 : h;
-                                    h = h > max ? max : h;
-                                    oldx = this.style.marginLeft.replace('px', '');
-                                    oldy = this.style.marginTop.replace('px', '');
-                                    this.style.marginLeft = d + 'px';
-                                    this.style.marginTop = h + 'px';
 
-                                    //Create jsGraphics object
-                                    var gr = new jxGraphics(document.getElementById("graphics"));
+                                    //drag
+                                     (function() {
+                                        touch.on('#drag .target', 'touchstart', function(ev) {
+                                            ev.originEvent.preventDefault();
+                                            ev.originEvent.stopPropagation();
+                                        });
+                                        var initialx = 0;
+                                        var initialy = 0;
+                                        touch.on('#drag .target', 'drag', {
+                                            interval: 10
+                                        }, function(ev) {
+                                            var d = initialx + ev.distanceX;
+                                            var h = initialy + ev.distanceY;
+                                            if (ev.fingerStatus === 'end') {
+                                                initialx += ev.distanceX;
+                                                initialy += ev.distanceY;
+                                            }
 
-                                    //Create jxColor object
-                                    var col = new jxColor("red");
+                                            var max = this.parentNode.offsetWidth - this.offsetWidth;
+                                            var maxh = this.parentNode.offsetHeight - this.offsetHeight;
+                                            d = d < 0 ? 0 : d;
+                                            d = d > max ? max : d;
+                                            h = h < 0 ? 0 : h;
+                                            h = h > max ? max : h;
+                                            oldx = this.style.marginLeft.replace('px', '');
+                                            oldy = this.style.marginTop.replace('px', '');
+                                            this.style.marginLeft = d + 'px';
+                                            this.style.marginTop = h + 'px';
 
-                                    //Create jxPen object
-                                    var pen = new jxPen(col, '2px');
+                                            //Create jsGraphics object
+                                            var gr = new jxGraphics(document.getElementById("graphics"));
 
-                                    //Draw a Line between 2 points
-                                    //Define end points to draw line
-                                    var pt1 = new jxPoint(oldx, oldy);
-                                    var pt2 = new jxPoint(d, h);
-console.log(oldx);
-console.log(oldy);
-console.log(d);
-console.log(h);
-                                    //Create line object  
-                                    var line = new jxLine(pt1, pt2, pen);
+                                            //Create jxColor object
+                                            var col = new jxColor("red");
 
-                                    //Draw the line on the graphics
-                                    line.draw(gr);
+                                            //Create jxPen object
+                                            var pen = new jxPen(col, '2px');
 
-                                });
-                            })();
+                                            //Draw a Line between 2 points
+                                            //Define end points to draw line
+                                            var pt1 = new jxPoint(oldx, oldy);
+                                            var pt2 = new jxPoint(d, h);
+                                            console.log(oldx);
+                                            console.log(oldy);
+                                            console.log(d);
+                                            console.log(h);
+                                            //Create line object  
+                                            var line = new jxLine(pt1, pt2, pen);
+
+                                            //Draw the line on the graphics
+                                            line.draw(gr);
+
+                                        });
+                                    })();
         </script>
     </body>
 
